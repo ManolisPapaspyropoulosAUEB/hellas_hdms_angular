@@ -1,0 +1,127 @@
+<div style="background-color: #F4F4F4;height: 100vh;">
+  <div>
+    <div class="col-12 col-lg-12" style="color:#ffffff;background: #060639;font-size: 14px;height: 40px;">
+      <div style="opacity:0.86;display:inline-block;margin-left: 10px;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 18px;line-height: 37px">
+        Εγκαταστάτες
+      </div>
+      <div style="float:right;">
+        <button class="btn" (click)="logOut()" style="background: #060639;color:#fabe02;font-size: 14px;line-height: 37px;padding: 0 25px;">
+          <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label
+            style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding-top: 20px;padding-left: 40px;">
+      <input type="checkbox" name="filter" [(ngModel)]="active"/>
+      <label style="margin-right:20px">Ενεργοί</label>
+      <input type="checkbox" name="filter" [(ngModel)]="inactive"/>
+      <label style="margin-right:20px">Ανενεργοί</label>
+      <input type="checkbox" name="filter" [(ngModel)]="firstTime"/>
+      <label>Αιτήματα ενεργοποίησης</label>
+
+      <input class="form-control" placeholder="Αναζήτηση με επωνυμία, email, ΑΦΜ, πόλη" [(ngModel)]="searchField" style="width:25%;display: inline-block;margin-left: 20px;outline:0;box-shadow: none;border:none;"
+        (keyup)="search()">
+    </div>
+    <div class="col-md-12" style="padding-left:40px !important;overflow-x:scroll">
+      <table style="width: 100%;">
+        <tr style="border-bottom: 1px solid #ddd;padding: 10px 10px;">
+          <th style="padding: 10px 10px;">User Id</th>
+          <th style="padding: 10px 10px;">Επωνυμία</th>
+          <th style="padding: 10px 10px;">Email</th>
+          <th style="padding: 10px 10px;">ΑΦΜ</th>
+          <th style="padding: 10px 10px;">Πόλη</th>
+          <th style="padding: 10px 10px;">Οδός\Aριθμός</th>
+          <th style="padding: 10px 10px;">ΤΚ</th>
+          <th style="padding: 10px 10px;">Σταθερό</th>
+          <th style="padding: 10px 10px;">Κινητό</th>
+          <th style="padding: 10px 10px;">FAX</th>
+          <th style="padding: 10px 10px;">Website</th>
+          <th style="padding: 10px 10px;text-align: center">Κατάσταση</th>
+        </tr>
+        <tr *ngFor="let install of getFilterResults(); let i = index;" style="border-bottom: 1px solid #ddd;padding: 10px 10px;cursor: pointer;">
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.id}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+
+            <span style="margin-right: 3px">{{install.name}}</span>
+
+            {{install.lastName}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.email}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerAfm}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerInsuredAreaCity}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerInsuredAreaAddress}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerInsuredAreaPostCode}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerLandlinePhone}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerMobilePhone}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.fax}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;" (click)="loadInstaller(install)">
+            {{install.installerWebsite}}
+          </td>
+          <td class="td-border" style="padding: 10px 10px;text-align: center">
+            <span *ngIf="install.active == 1 && install.firstTime == false && isAdmin()" (click)="activeInstaller(install,0)"
+              style="cursor: pointer" tooltip="Ενεργός εγκαταστάτης. Κάντε κλικ για απενεργοποίηση.">
+              <mat-icon style="color:green">
+                done
+              </mat-icon>
+            </span>
+            <span *ngIf="install.active == 0 && install.firstTime == false && isAdmin()" (click)="activeInstaller(install,1)"
+              style="cursor: pointer" tooltip="Ανενεργός εγκαταστάτης. Κάντε κλικ για ενεργοποίηση (Θα σταλεί email με τον κωδικό).">
+              <mat-icon style="color:red">
+                clear
+              </mat-icon>
+            </span>
+            <span *ngIf="install.firstTime == true && isAdmin()" (click)="activeInstaller(install,1) " style="cursor: pointer"
+              tooltip="Ανενεργός εγκαταστάτης. Κάντε κλικ για ενεργοποίηση (Θα σταλεί email με τον κωδικό).">
+              <mat-icon style="color: orange">
+                error_outline
+              </mat-icon>
+            </span>
+            <span *ngIf="install.active == 1 && install.firstTime == false && !isAdmin()" (click)="activeInstaller(install,0)"
+              style="cursor: pointer">
+              <mat-icon style="color:green">
+                done
+              </mat-icon>
+            </span>
+            <span *ngIf="install.active == 0 && install.firstTime == false && !isAdmin()" (click)="activeInstaller(install,1)"
+              style="cursor: pointer">
+              <mat-icon style="color:red">
+                clear
+              </mat-icon>
+            </span>
+            <span *ngIf="install.firstTime == true && !isAdmin()" (click)="activeInstaller(install,1)" style="cursor: pointer">
+              <mat-icon style="color: orange">
+                error_outline
+              </mat-icon>
+            </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+
+
+
+  </div>
+  <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="true" (page)="onPaginateChange($event)" style="margin-bottom:50px;position: fixed;bottom: 0;">
+  </mat-paginator>
+</div>

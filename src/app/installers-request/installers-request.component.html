@@ -1,0 +1,60 @@
+<div>
+  <div class="col-12 col-lg-12 col-sm-12" style="color:#ffffff;background: #060639;font-size: 14px;height: 41px;">
+    <div style="opacity:0.86;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 18px;float: left;line-height: 40px">
+      Αιτήματα εγκαταστατών
+    </div>
+    <button class="btn" (click)="logOut()" style="float:right;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="isAuthenticated()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο
+        Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+    </button>
+  </div>
+  <div class="col-md-12" style="padding-top: 20px;padding-left: 40px;background-color: #F4F4F4;">
+    <div style="display: inline-block;position: relative;bottom: 30px;">
+      <input type="checkbox" name="filter" [(ngModel)]="open" (change)="search()" />
+      <label style="margin-right:20px">Open</label>
+      <input type="checkbox" name="filter" [(ngModel)]="inProgress" (change)="search()" />
+      <label style="margin-right:20px">In progress</label>
+      <input type="checkbox" name="filter" [(ngModel)]="submitted" (change)="search()" />
+      <label style="margin-right:20px">Submitted</label>
+    </div>
+    <div style="display:inline-block">
+      <input type="text" class="form-control" [(ngModel)]="searchTerm" style="display:block;width: 300px;height: 35px;"
+        placeholder="Αναζήτηση με επωνυμία η Α.Φ.Μ" (input)="search()">
+      <input type="radio" name="search" [value]="'installerSearch'" [(ngModel)]="searchItem" (change)="search()">
+      <label style="margin-right:20px;font-size: 12px;">Εγκαταστάτες</label>
+      <input type="radio" name="search" [value]="'customerSearch'" [(ngModel)]="searchItem" (change)="search()">
+      <label style="margin-right:20px;font-size: 12px;">Πελάτες</label>
+    </div>
+  </div>
+  <div style="overflow-y: scroll;overflow-x:scroll;height: 100vh;background-color: #F4F4F4;padding:40px;margin-top:-30px;">
+    <table style="width:100%;">
+      <tr>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">ID Εγκαταστάτη</td>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">Επώνυμο Εγκαταστάτη</td>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">Ημ/νια Υποβολής Εγκαταστάτη</td>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">Επώνυμο Πελάτη</td>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">ΑΦΜ Πελάτη</td>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">Ημ/νια Υποβολής Λογιστήριου</td>
+        <td style="padding: 10px 0;color:black;font-weight: bold;">Κατάσταση</td>
+      </tr>
+      <tr *ngFor="let application of applications; let i = index;" style="cursor: pointer;background-color:#F4F4F4;border-bottom: 1px solid #ddd;padding: 10px 0;"
+        (click)="loadRecord(i)">
+        <td style="padding: 10px 0;color:black;">{{application.installerId != null? application.installerId:'-'}}</td>
+        <td style="padding: 10px 0;color:black;">{{application.lastNameins != null?application.lastNameins:'-'}}</td>
+        <td [ngStyle]="getCreationCcDateStyle(application)">{{application.customers.creationCcDate !=
+          null?application.customers.creationCcDate:'-'}}</td>
+        <td style="padding: 10px 0;color:black;">{{application.customers.subscriberName !=
+          null?application.customers.subscriberName:'-'}}</td>
+        <td style="padding: 10px 0;color:black;">{{application.customers.afm != null?application.customers.afm:'-'}}</td>
+        <td [ngStyle]="getSubmittedCCDateStyle(application)">{{application.customers.submittedCcDate != null ?
+          application.customers.submittedCcDate : '-'}}</td>
+        <td style="padding: 10px 0;color:black;"><label [ngStyle]="getStatusStyle(application.customers.status)">{{application.customers.status
+            != null ? application.customers.status: '-'}}</label></td>
+      </tr>
+    </table>
+  </div>
+  <mat-paginator #paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="true" (page)="onPaginateChange($event)" style="margin-bottom:50px;position: fixed;bottom: 0;">
+  </mat-paginator>
+</div>

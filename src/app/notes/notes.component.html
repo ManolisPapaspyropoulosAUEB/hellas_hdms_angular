@@ -1,0 +1,100 @@
+<mat-menu #profileMenu="matMenu">
+  <button mat-menu-item (click)="goToProfile()">Αλλαγή στοιχείων</button>
+  <button mat-menu-item (click)="goToChangePassword()">Αλλαγή κωδικού</button>
+</mat-menu>
+<div>
+  <div class="col-12 col-lg-12 col-sm-12" style="color:#ffffff;background: #060639;font-size: 14px;height: 41px;">
+    <div style="opacity:0.86;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 18px;float: left;line-height: 40px">
+      Σημειώσεις
+    </div>
+    <button class="btn" (click)="logOut()" style="float:right;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;"
+      *ngIf="isAuthenticated()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+    </button>
+    <button class="btn" style="float:right;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;line-height: 37px;"
+      *ngIf="isAuthenticated() && !isAdmin() && !isACC() && !isCC()" [matMenuTriggerFor]="profileMenu">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">account_circle</mat-icon>ΠΡΟΦΙΛ<mat-icon
+        style="color:#fabe02;position: relative;right:5px;top:6px;">arrow_drop_down</mat-icon>
+    </button>
+    <button class="btn" (click)="makeNewNote()" style="float:right;background: #060639;color:#fabe02;font-size: 14px;padding: 0 25px;line-height: 37px;"
+      *ngIf="!newNote && !isAdmin()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">add_circle_outline</mat-icon>ΝΕΑ ΣΗΜΕΙΩΣΗ
+    </button>
+    <button class="btn" (click)="cancel()" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="edit == true && notes.length > 0 && !isAdmin()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">cancel</mat-icon>ΑΚΥΡΩΣΗ
+    </button>
+    <button class="btn" (click)="save()" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;line-height: 37px;"
+      *ngIf="edit == true && index >= 0 && !isAdmin()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">save</mat-icon>ΑΠΟΘΗΚΕΥΣΗ
+    </button>
+    <button class="btn" (click)="openDialog()" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="edit == false && index >= 0 && notes.length > 0 && !isAdmin()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">delete</mat-icon>ΔΙΑΓΡΑΦΗ
+    </button>
+    <button class="btn" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="edit == false && notes.length > 0 && !isAdmin()" (click)="changeToEdit()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">edit</mat-icon>ΕΠΕΞΕΡΓΑΣΙΑ
+    </button>
+  </div>
+  <div class="row" style="margin-top:5px;">
+    <div class="col-md-5 col-sm-5">
+      <div *ngFor="let note of notes; let i = index;" class="row" style="border-bottom:1px solid #DBDBDB;background-color: #FEFEFE;margin-bottom: 0px;cursor: pointer;"
+        (click)="selectNote(i)" [ngClass]="{'selected':index == i,'unselected':index != i}">
+        <div class="col-md-11 col-lg-11 text-left" style="padding-left: 30px;color:#525252;font-family:Arial, Helvetica, sans-serif; font-size: 16px;font-weight:bold;padding-top: 5px;">
+          {{note.title | truncate : 30}}
+        </div>
+        <div class="col-md-1 col-lg-1 text-right">
+          <mat-icon class="maticon" style="font-size: 30px;color:#525252;position: relative;top:15px;">
+            keyboard_arrow_right
+          </mat-icon>
+        </div>
+        <div class="col-md-6 col-lg-6 text-left" style="color:#525252;padding-left: 30px !important;font-size: 13px;position: relative;bottom:10px;font-family: Arial, Helvetica, sans-serif;white-space: nowrap">
+          <span>
+            Κατάσταση: {{note.status}}
+          </span>
+        </div>
+        <div class="col-md-6 col-lg-6 text-center" style="color:#525252;font-size: 13px;position: relative;bottom:10px;font-family: Arial, Helvetica, sans-serif">
+          <span>
+            Ημερομηνία: {{formatDate(note.todoDate)}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7 col-sm-7 notes-fields" *ngIf="selectedNote" style="padding-top:30px;background-color: #F4F4F4;height: 100vh;padding-left: 30px;">
+      <div class="col-md-12 text-left" style="color:#060639;font-weight:bold;">ΤΙΤΛΟΣ</div>
+      <div class="col-md-12 text-left" style="padding-bottom:15px;">
+        <input [(ngModel)]="selectedNote.title" style="width:69%" type="text" [readonly]="edit == false">
+      </div>
+      <div class="col-md-12 text-left" style="color:#060639;font-weight:bold;">ΗΜΕΡΟΜΗΝΙΑ</div>
+      <div class="col-md-12 text-left" style="padding-bottom: 15px;">
+        <input matInput [matDatepicker]="picker" placeholder="Επιλέξτε ημερομηνία" [ngModel]="formatDate(selectedNote.todoDate)"
+          style="width:20%" (dateChange)="setDate($event)" type="text" class="datepicker" [readonly]="edit == false">
+        <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="edit == false"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+      <div class="col-md-12 text-left" style="color:#060639;font-weight:bold;">ΚΑΤΑΣΤΑΣΗ</div>
+      <div class="col-md-12 text-left" style="padding-bottom:15px;">
+        <div>
+          <input type="radio" [value]="'Να κάνω'" name="status" [(ngModel)]="selectedNote.status" [disabled]="edit == false">
+          <label style="margin-left:10px">Να κάνω</label>
+        </div>
+        <div>
+          <input type="radio" [value]="'Σε εκκρεμότητα'" name="status" [(ngModel)]="selectedNote.status" [disabled]="edit == false">
+          <label style="margin-left:10px">Σε εκκρεμότητα</label>
+        </div>
+        <div>
+          <input type="radio" [value]="'Έγινε'" name="status" [(ngModel)]="selectedNote.status" [disabled]="edit == false">
+          <label style="margin-left:10px">Έγινε</label>
+        </div>
+      </div>
+      <div class="col-md-12 text-left" style="color:#060639;font-weight:bold;">
+        ΠΕΡΙΓΡΑΦΗ
+      </div>
+      <div class="col-md-12" style="padding-bottom: 10px;">
+        <textarea [(ngModel)]="selectedNote.content" rows="6" cols="80" style="width:650px !important;" type="text"
+          [readonly]="edit == false"></textarea>
+      </div>
+    </div>
+  </div>
+</div>

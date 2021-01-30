@@ -1,0 +1,100 @@
+.container {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+input[type=radio]:checked+label {
+    color: #060639;
+    font-weight: bold;
+}
+
+.selected {
+    background-color: #45456B !important;
+    color: #FFC200 !important;
+}
+
+.selected .name {
+    color: #FFC200 !important;
+}
+
+.selected .city {
+    color: #FFC200 !important;
+}
+
+.selected .customerAfm {
+    color: #FFC200 !important;
+}
+
+.selected .telephone {
+    color: #FFC200 !important;
+}
+
+.selected .maticon {
+    color: #FFC200 !important;
+}
+
+.unselected {
+    color: #060639;
+}
+
+body {
+    background-color: #FBFBFB !important;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+input+label {
+    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+#close {
+    font-size: 20px;
+    position: relative;
+    top: 5px;
+}
+
+textarea {
+    width: 340px;
+}
+
+.btn:focus {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+input:focus {
+    outline: 0 !important;
+}
+
+.unselected:hover {
+    background-color: #E6E6ED !important;
+}
+
+.customer-fields input[type='text'],
+.customer-fields textarea{
+  width: 100%!important;
+  background: #fff!important;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 0;
+  padding-left:5px;
+  font-size: 14px;
+  resize: none;
+}
+
+textarea:focus{
+    outline: 0;
+}
+
+button.mat-menu-item{
+    outline: 0;
+}

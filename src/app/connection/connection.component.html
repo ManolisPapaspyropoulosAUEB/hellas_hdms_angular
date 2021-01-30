@@ -1,0 +1,181 @@
+
+<style>
+  /*class="network" style="color:#060639;font-size:20px;font-weight:bold;"*/
+
+  .network{
+    color:#060639;font-size:20px;font-weight:bold;
+  }
+
+  .pots{
+    color:#060639;font-size:20px;font-weight:bold;
+  }
+
+  /*class="netrec" style="color:#060639;font-weight: 500;"*/
+
+  .row1{
+    color:#060639;font-weight: 500;
+  }
+
+
+  /*<label style="display:inline-block;color:#A2A2BD;font-size: 20px;">Primary:</label>*/
+
+  .primarysecondaryport{
+    color:#A2A2BD;font-size: 20px;
+  }
+
+  .value{
+    color:#060639;font-size: 16px;font-weight: 600;
+  }
+
+
+
+
+</style>
+
+<mat-menu #profileMenu="matMenu">
+  <button mat-menu-item (click)="goToProfile()">Αλλαγή στοιχείων</button>
+  <button mat-menu-item (click)="goToNewPassword()">Αλλαγή κωδικού</button>
+</mat-menu>
+<div>
+  <div class="col-12 col-lg-12" style="background: #060639;font-size: 16px;height: 40px;">
+    <div style="opacity:0.86;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 20px;float: left;line-height: 40px;">
+      Πληροφορίες σύνδεσης
+    </div>
+    <button class="btn" (click)="logOut()" style="background: #060639;color:#fabe02;font-size: 16px;padding: 0 25px;float:right;outline: 0;box-shadow: none;"
+      *ngIf="isAuthenticated()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+    </button>
+    <button class="btn" style="float:right;background-color:#060639;color:#fabe02;font-size: 16px;padding: 0 25px;outline: 0;box-shadow: none;"
+      *ngIf="isAuthenticated() && !isAdmin() && !isACC() && !isCC()" [matMenuTriggerFor]="profileMenu">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">account_circle</mat-icon>ΠΡΟΦΙΛ<mat-icon
+        style="color:#fabe02;position: relative;right:5px;top:6px;">arrow_drop_down</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="col-md-12" style="text-align: left;padding-left:70px;    padding-top: 70px;    overflow-y: scroll;
+    height: 94vh;">
+
+  <div  style="    min-height: 420px;" class="">
+   <p class="network">Network
+
+
+
+   </p>
+
+
+
+    <div *ngFor="let cinfo of connectionInfoNetwork" style="margin-bottom: 20px">
+      <div class="row">
+        <div class="col-md-4 row1">
+
+          {{cinfo.title}}
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 ">
+          <span class="primarysecondaryport">Primary</span> : <span class="value">{{cinfo.primary}}</span>
+        </div>
+        <div  *ngIf="cinfo.portPrimary!='-'" class="col-md-4">
+          <span *ngIf="cinfo.portPrimary!='-'" class="primarysecondaryport"> Port</span> : <span class="value">{{cinfo.portPrimary}}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <span class="primarysecondaryport"> Secondary</span> :<span class="value"> {{cinfo.secondary}}</span>
+        </div>
+        <div    class="col-md-4">
+          <span *ngIf="cinfo.portSecondary!='-'"  class="primarysecondaryport">   Port</span> : <span class="value"> {{cinfo.portSecondary}} </span>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+  <div  style="    height: 420px;" class="">
+    <p class="network">Pots
+
+
+
+    </p>
+
+
+
+
+    <div *ngFor="let cinfo of connectionInfoPots" style="margin-bottom: 20px">
+      <div class="row">
+        <div class="col-md-4 row1">
+
+          {{cinfo.title}}
+
+        </div>
+      </div>
+      <div class="row">
+        <div  class="col-md-3 ">
+          <span class="primarysecondaryport">Primary</span> : <span class="value">{{cinfo.primary}}</span>
+        </div>
+
+
+
+        <div *ngIf="cinfo.portPrimary!='-'" class="col-md-4">
+<!--          <span class="primarysecondaryport"> Port</span> : <span class="value">{{cinfo.portPrimary}}</span>-->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <span class="primarysecondaryport"> Secondary</span> :<span class="value"> {{cinfo.secondary}}</span>
+        </div>
+
+        <div *ngIf="cinfo.portSecondary!='-'" class="col-md-4">
+<!--          <span class="primarysecondaryport">   Port</span> : <span class="value"> {{cinfo.portSecondary}} </span>-->
+        </div>
+
+
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+<!--  <div class="row pots">-->
+<!--    Pots-->
+<!--    <mat-icon id="addCircle" style="position: relative;top: 3px;left: 10px;cursor: pointer;" (click)="addPhoneNotice()">-->
+<!--      add_circle-->
+<!--    </mat-icon>-->
+<!--  </div>-->
+
+
+
+</div>
+

@@ -1,0 +1,27 @@
+<mat-menu #profileMenu="matMenu">
+  <button mat-menu-item (click)="goToProfile()">Αλλαγή στοιχείων</button>
+  <button mat-menu-item (click)="goToNewPassword()">Αλλαγή κωδικού</button>
+</mat-menu>
+<div style="background-color: #f5f5f5;height: 100vh;">
+  <div class="col-12 col-lg-12" style="color:#ffffff;background: #060639;font-size: 14px;height: 40px;">
+    <div style="opacity:0.86;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 18px;float: left;line-height: 40px">
+      Hellas DMS
+    </div>
+    <button class="btn" (click)="logOut()" style="background: #060639;color:#fabe02;font-size: 14px;padding: 0 25px;float:right;outline: 0;box-shadow: none;line-height: 37px;">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+    </button>
+    <button class="btn" style="float:right;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0;box-shadow: none;line-height: 37px;"
+      *ngIf="!isAdmin() && !isACC() && !isCC()" [matMenuTriggerFor]="profileMenu">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">account_circle</mat-icon>ΠΡΟΦΙΛ<mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">arrow_drop_down</mat-icon>
+    </button>
+  </div>
+  <div class="text-center" style="padding-top: 30px;">
+    <h1 style="color: #060639;">Καλωσήρθατε στην Hellas DMS</h1>
+    <p style="font-weight: bold;color: #060639;">
+      ΑΘΗΝΑ: 2106028120
+    </p>
+    <p style="font-weight: bold;color: #060639;">
+      ΘΕΣΣΑΛΟΝΙΚΗ: 2311117400
+    </p>
+  </div>
+</div>

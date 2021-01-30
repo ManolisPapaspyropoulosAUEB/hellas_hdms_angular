@@ -1,0 +1,91 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="side" opened role="navigation" class="text-center" *ngIf="isLoggedIn()==true" style="padding-top: 25px;background-image: url('assets/hellasbg.png');">
+    <a routerLink="/">
+      <img src="assets/logo.png" style="height: 80px;width: 100px;margin-bottom: 10px;" />
+    </a>
+    <mat-nav-list>
+      <a mat-list-item routerLink='/hellasdms' routerLinkActive="active-list-item">
+        <img src="assets/yellow-icon1.png" style="width:40px;height:40px;margin-right: 10px;">
+
+
+
+        <label style="font-size:13px;font-weight:bold;font-family: Arial, Helvetica, sans-serif;position: relative;top:5px;cursor:pointer;">Hellas
+          DMS</label>
+      </a>
+      <a mat-list-item routerLink='/installersRequests' routerLinkActive="active-list-item" *ngIf="isAdmin() || isCC() || isACC()">
+        <mat-icon style="background: #121254;color: #FFC200;border-radius: 50%;height: 40px;width: 40px;line-height: 40px;font-size: 24px;margin-right: 10px;">assignment</mat-icon>
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Αιτήματα  Εγκαταστατών</label>
+      </a>
+
+
+      <a mat-list-item routerLink='/installers' routerLinkActive="active-list-item" *ngIf="isAdmin() || isCC() || isACC()">
+        <mat-icon style="background: #121254;color: #FFC200;border-radius: 50%;height: 40px;width: 40px;line-height: 40px;font-size: 24px;margin-right: 10px;">build</mat-icon>
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Μητρώο
+          Εγκαταστατών</label>
+      </a>
+
+
+      <a mat-list-item routerLink='/customers' routerLinkActive="active-list-item" *ngIf="!isAdmin() && !isCC() && !isACC()">
+        <img src="assets/yellow-icon2.png" style="width:40px;height:40px;margin-right: 10px;">
+        <label style="font-size:13px;font-weight:bold;font-family: Arial, Helvetica, sans-serif;position: relative;top:5px;cursor:pointer;">Οι
+          Πελάτες μας</label>
+      </a>
+      <a mat-list-item routerLink='/connection' routerLinkActive="active-list-item">
+        <img src="assets/yellow-icon4.png" style="width: 40px;height:40px;position:relative;right:5px;margin-right:10px;">
+        <label style="font-size:13px;font-weight:bold;font-family: Arial, Helvetica, sans-serif;position: relative;top:5px;cursor:pointer;">Πληροφορίες
+          Σύνδεσης</label>
+      </a>
+
+
+      <a mat-list-item href='https://webdealer.hellasdms.com/#/page/login' routerLinkActive="active-list-item"
+         target="_blank">
+        <!--/techapp-->
+        <img src="assets/yellow-icon5.png" style="width:40px;height:40px;margin-right: 10px;">
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;"> Web Dealer </label>
+      </a>
+
+
+
+      <a mat-list-item href='https://dealer.securecomwireless.com/#/page/login' routerLinkActive="active-list-item"
+        target="_blank">
+        <!--/techapp-->
+        <img src="assets/yellow-icon5.png" style="width:40px;height:40px;margin-right: 10px;">
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Tech
+          App</label>
+      </a>
+      <!--  <a mat-list-item routerLink='/webdealer' routerLinkActive="active-list-item">
+        <img src="assets/yellow-icon7.png" style="width:40px;height:40px;margin-right: 10px;">
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px">Web Dealer</label>
+      </a>-->
+      <a mat-list-item href='https://webportal.ultra-sync.com/' routerLinkActive="active-list-item" target="_blank">
+        <!--/ultrasync-->
+        <img src="assets/yellow-icon8.png" style="width:40px;height:40px;margin-right: 10px;">
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Ultra
+          Sync App</label>
+      </a>
+      <a mat-list-item routerLink='/contact' routerLinkActive="active-list-item">
+        <img src="assets/yellow-icon6.png" style="width:40px;height:40px;margin-right: 10px;">
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Επικοινωνία</label>
+      </a>
+      <a mat-list-item routerLink='/notifications' routerLinkActive="active-list-item" *ngIf="isAdmin()">
+        <mat-icon style="background: #121254;color: #FFC200;border-radius: 50%;height: 40px;width: 40px;line-height: 40px;font-size: 24px;margin-right: 10px;">notifications</mat-icon>
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Ειδοποιήσεις</label>
+      </a>
+
+
+      <a mat-list-item routerLink='/coredata' routerLinkActive="active-list-item" *ngIf="isAdmin() || isCC() || isACC()">
+        <mat-icon style="background: #121254;color: #FFC200;border-radius: 50%;height: 40px;width: 40px;line-height: 40px;font-size: 24px;margin-right: 10px;">build</mat-icon>
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Πληροφορίες Σύνδεσης Παραμετρικά</label>
+      </a>
+
+
+      <a mat-list-item routerLink='/notes' routerLinkActive="active-list-item" *ngIf="!isAdmin()">
+        <img src="assets/yellow-icon3.png" style="width: 40px;height: 40px;margin-right: 10px;">
+        <label style="font-size:13px;font-family: Arial, Helvetica, sans-serif;font-weight:bold;position: relative;top:5px;cursor:pointer;">Σημειώσεις</label>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content style="overflow: hidden;">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

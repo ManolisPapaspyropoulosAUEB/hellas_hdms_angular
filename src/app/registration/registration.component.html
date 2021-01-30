@@ -1,0 +1,153 @@
+<div class="col-md-12" style="background-image: url('assets/hellasbg.png');height:100vh;overflow-y: auto;">
+  <div class="row">
+    <p style="text-align: center;width: 100%;padding: 20px 0;">
+      <img src="assets/logo.png" style="height: 80px;width: 100px;margin: 0 auto;cursor: pointer;" (click)="goToLogin()" />
+    </p>
+  </div>
+  <h3 style="color:white;text-align: center;margin-bottom: 15px;font-family: Open Sans;">Αίτημα Εγγραφής Εγκαταστάτη</h3>
+  <div class="row registration-form">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold">
+          <span style="line-height: 28px;">Επωνυμία <label style="color:red">*</label></span></div>
+
+
+        <div class="col-md-6"><input type="text" [(ngModel)]="lastName" [ngStyle]="getNameStyle()" (input)="nameJustStarted = false"></div>
+        <div class="col-md-3 text-left" style="color:red;font-size: 16px;">
+          {{lastnameError}}
+        </div>
+      </div>
+
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold">
+          <span style="line-height: 28px;">Όνομα <label style="color:red">*</label></span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="name" [ngStyle]="getlastNameStyle()" (input)="lastNameJustStarted = false"></div>
+        <div class="col-md-3 text-left" style="color:red;font-size: 16px;">
+          {{nameError}}
+        </div>
+      </div>
+
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold">
+          <span style="line-height: 28px;">Όνομα Εταιρίας </span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="companyName"  ></div>
+
+      </div>
+
+
+
+
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Διεύθυνση(Οδός\Aριθμός)</span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="installerInsuredAreaAddress"></div>
+      </div>
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Πόλη</span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="installerInsuredAreaCity"></div>
+      </div>
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Περιγραφή επαγγέλματος</span></div>
+        <div class="col-md-6"><textarea rows="3" cols="5" style="resize: none;" [(ngModel)]="installerProffesionalDescription"></textarea></div>
+      </div>
+
+
+
+
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">ΑΦΜ <label style="color:red">*</label></span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="installerAfm" [ngStyle]="getAfmStyle()" (input)="afmJustStarted = false"></div>
+        <div class="col-md-3" style="color:red;font-size: 16px;">
+          {{afmError}}
+        </div>
+      </div>
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">ΔΟΥ</span></div>
+        <div class="col-md-6"><textarea rows="3" cols="5" style="resize: none;" [(ngModel)]="doy"></textarea></div>
+      </div>
+
+
+
+<!--      <div class="row" style="padding-top:10px">-->
+<!--        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Τ.Κ</span></div>-->
+<!--        <div class="col-md-6"><input type="text" [(ngModel)]="installerInsuredAreaPostCode"></div>-->
+<!--      </div>-->
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Τηλέφωνο χώρου</span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="installerLandlinePhone"></div>
+      </div>
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">FAX</span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="fax"></div>
+      </div>
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Κινητό</span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="installerMobilePhone"></div>
+      </div>
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Email <label style="color:red">*</label></span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="email" [ngStyle]="getEmailStyle()" (input)="emailJustStarted = false"></div>
+        <div class="col-md-3" style="color:red;font-size: 16px;">{{emailError}}</div>
+      </div>
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Website</span></div>
+        <div class="col-md-6"><input type="text" [(ngModel)]="installerWebsite"></div>
+      </div>
+
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Πολιτική είσπραξης</span></div>
+        <div class="col-md-3">
+          <input type="radio" name="radio1" value="selfCollection" [(ngModel)]="installerCollectionPolicy" style="margin-right:10px;">
+          <label style="color:white">Είσπραξη από τον ίδιο</label>
+        </div>
+        <div class="col-md-3">
+          <input type="radio" name="radio1" value="hdmsCollection" [(ngModel)]="installerCollectionPolicy" style="margin-right:10px;">
+          <label style="color:white">Είσπραξη από HDMS</label>
+        </div>
+      </div>
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Εmail Invoice</span></div>
+        <div class="col-md-3">
+          <input type="radio" name="radio2" value="yes" [(ngModel)]="emailInvoice" style="margin-right:10px;">
+          <label style="color:white">Ναι</label>
+        </div>
+        <div class="col-md-3">
+          <input type="radio" name="radio2" value="no" [(ngModel)]="emailInvoice" style="margin-right:10px;">
+          <label style="color:white">Όχι</label>
+        </div>
+      </div>
+      <div class="row" style="padding-top:10px">
+        <div class="col-md-3 text-right bold"><span style="line-height: 28px;">Billing Address Only</span></div>
+        <div class="col-md-3">
+          <input type="radio" name="radio3" value="yes" [(ngModel)]="installerBillingAddressOnly" style="margin-right:10px;">
+          <label style="color:white">Ναι</label>
+        </div>
+        <div class="col-md-3">
+          <input type="radio" name="radio3" value="no" [(ngModel)]="installerBillingAddressOnly" style="margin-right:10px;">
+          <label style="color:white">Όχι</label>
+        </div>
+      </div>
+      <div class="row" style="padding-top: 20px">
+        <div class="col-md-12 text-center">
+          <button class="btn" (click)="register()" style="background: #FFC200;color: #060639;padding: 5px 25px;font-weight: bold;margin-right: 10px;border-radius: 25px;padding-left: 50px;padding-right: 50px;">Εγγραφή</button>
+        </div>
+        <!-- <div class="col-md-12 text-center" style="padding-top:10px">
+          <a routerLink="/">Σύνδεση λογαριασμού</a>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+</div>

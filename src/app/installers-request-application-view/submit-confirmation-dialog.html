@@ -1,0 +1,20 @@
+<mat-dialog-content>
+    <p>
+        Θέλετε να ολοκληρώσετε την υποβολή?
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button class="btn" style="background: #FFC200 !important;
+    color: #060639 !important;
+    padding: 5px 40px !important;
+    font-weight: bold !important;
+    border-radius: 25px !important;"
+        (click)="onConfirmClick()">ΝΑΙ</button>
+    <button class="btn" mat-dialog-close style="background: grey !important;
+    color: white !important;
+    padding: 5px 40px !important;
+    font-weight: bold !important;
+    border-radius: 25px !important;
+    margin-left: 10px;"
+        (click)="onNoClick()">ΟΧΙ</button>
+</mat-dialog-actions>

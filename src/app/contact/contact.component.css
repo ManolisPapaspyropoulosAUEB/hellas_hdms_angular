@@ -1,0 +1,24 @@
+.sendButton {
+    background: #FFC200 !important;
+    color: #060639 !important;
+    padding: 5px 20px !important;
+    font-weight: bold !important;    
+    border-radius: 25px !important;    
+}
+
+textarea {
+    resize: none;
+}
+
+textarea:focus {
+    outline: 0;
+    box-shadow: unset;
+}
+
+button.mat-menu-item {
+    outline: 0;
+}
+
+button:focus{
+    box-shadow: none !important;
+}

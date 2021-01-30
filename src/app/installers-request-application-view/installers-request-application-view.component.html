@@ -1,0 +1,1277 @@
+<div class="col-12 col-lg-12 col-sm-12" style="color:#FFC200;background: #060639;font-size: 14px;height: 40px;line-height: 37px;">
+  <mat-icon style="position:relative;top:6px;cursor: pointer;" (click)="goBack()">keyboard_arrow_left</mat-icon>ΣΤΟΙΧΕΙΑ ΕΓΓΡΑΦΗΣ
+  <div style="float:right">
+    <button class="btn" (click)="logOut()" style="float:right;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="isAuthenticated()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο
+        Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+    </button>
+    <button class="btn" (click)="cancel()" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="edit == true && !isAdmin()">
+      <mat-icon style="color:#fabe02;position:relative;right:5px;top:6px;">cancel</mat-icon>ΑΚΥΡΩΣΗ
+    </button>
+    <button class="btn" (click)="save()" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;line-height: 37px;outline: 0;box-shadow: none;"
+      *ngIf="edit == true && !isAdmin()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">save</mat-icon>ΑΠΟΘΗΚΕΥΣΗ
+    </button>
+    <button class="btn" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="edit == false && !isAdmin() && (isCC() && edit == false && data.customers.status != 'COMPLETED') || (isACC() && isSubmitted() && edit == false && data.customers.status != 'COMPLETED')" (click)="changeToEdit()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">edit</mat-icon>ΕΠΕΞΕΡΓΑΣΙΑ
+    </button>
+    <button class="btn" style="float:right;margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+      *ngIf="!isAdmin() && ((isCC() && data.customers.status !='SUBMITTED' && edit == false && data.customers.status != 'COMPLETED') || (isACC() && edit == false && isSubmitted() && data.customers.status != 'COMPLETED'))"
+      (click)="submit()">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">send</mat-icon>ΟΛΟΚΛΗΡΩΣΗ
+    </button>
+  </div>
+</div>
+
+
+<div class="" style="padding-left:30px;background-color: #F4F4F4">
+  <div class="col-md-12 fields" style="height:100vh;overflow-y:scroll;padding-bottom: 40px;">
+    <div class="row">
+
+
+      <div class="col-md-6" style="padding-top:30px;">
+        <label style="font-size:20px;color:#060639;font-weight: bold;">ΠΕΛΑΤΗΣ</label>
+        <div>
+          <div style="font-size:12px;color:#060639;margin-left:10px;font-weight: bold;">
+            ΑΡΙΘΜΟΣ ΣΥΝΔΡΟΜΗΣ - CSID
+            (6 ΨΗΦΙΑ)
+          </div>
+          <div style="width: 20%;"><input style="width: 225px!important;" type="text"
+                                          [(ngModel)]="data.customers.customerPass"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"
+                                          maxlength="6"></div>
+        </div>
+
+        <div class="eponymia">
+          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ONOMA/ΕΠΩΝΥΜΟ<span
+            style="color:red;padding-left:5px;">*</span></div>
+          <div><input id="customerName" style="    width: 620px!important;
+             margin-left: -5px;
+           margin-bottom: 11px;" type="text" [(ngModel)]="data.customers.subscriberName"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></div>
+        </div>
+
+        <div class="eponymia">
+          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΟΝΟΜΑ ΕΤΑΙΡΙΑΣ<span
+            style="color:red;padding-left:5px;">*</span></div>
+          <div><input id="customerName" style="    width: 620px!important;
+          margin-left: -5px;
+           margin-bottom: 11px;" type="text" [(ngModel)]="data.customers.companyName"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></div>
+        </div>
+
+
+        <div class="col-lg-12" style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;padding-left: 0;">
+          ΔΙΕΥΘΥΝΣΗ ΑΣΦΑΛΙΖΟΜΕΝΟΥ ΧΩΡΟΥ
+        </div>
+        <div style="color:#060639; opacity: 0.7;font-size: 12px;">
+          Πόλη<span style="color:red;padding-left:5px;">*</span>
+        </div>
+        <div style="padding-left:0">
+          <input type="text" [(ngModel)]="data.customers.insuredAreaCity"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+        <div class="row">
+          <div class="col-7 col-lg-7" style="color:#060639; opacity: 0.7;font-size: 12px;padding-top: 10px;">
+            Οδός - Αριθμός
+          </div>
+          <div class="col-3 col-lg-3"
+               style="margin-top:10px;color:#060639; opacity: 0.7;font-size: 12px;padding-left: 0px">
+            Τ.Κ
+          </div>
+          <div class="col-2 col-lg-2"
+               style="margin-top:10px;color:#060639; opacity: 0.7;font-size: 12px;padding-left: 0px">
+            Όροφος
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-7 col-lg-7">
+            <input type="text" [(ngModel)]="data.customers.insuredAreaAddress"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+          <div class="col-3 col-lg-3" style="padding-left:0">
+            <input type="text" [(ngModel)]="data.customers.insuredAreaPostCode"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+          <div class="col-2 col-lg-2" style="padding-left:0">
+            <input type="text" [(ngModel)]="data.customers.insuredAreaFloor"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΑΦΜ/ΔΟΥ</div>
+          <div><input type="text" [(ngModel)]="data.customers.afm"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></div>
+        </div>
+        <div class="tilefono">
+          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΤΗΛΕΦΩΝΟ ΧΩΡΟΥ</div>
+          <div><input type="text" [(ngModel)]="data.customers.areaPhone"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></div>
+        </div>
+        <div class="tilefono">
+          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">FAX</div>
+          <div><input type="text" [(ngModel)]="data.customers.fax"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></div>
+        </div>
+        <div class="tilefono">
+          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">E-MAIL</div>
+          <div><input type="text" [(ngModel)]="data.customers.email"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></div>
+        </div>
+        <div class="text-left" style="margin-left: -4px;color:#060639;font-size: 12px;font-weight: bold;">
+          ΚΩΔΙΚΟΣ(PASSWORD 20 ψηφία)
+        </div>
+        <div style="margin-left: -4px;width: 80%">
+          <input type="text" [(ngModel)]="data.customers.customerAuxiliaryPass" style="background: #fff;"
+                [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"   maxlength="20"></div>
+        <div>
+          <div style="width:60%;font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΚΩΔΙΚΟΣ ΑΠΕΙΛΗΣ DURESS
+            CODE (6
+            ψηφία)
+          </div>
+          <div style=" width:20%"><input id="customerCode" type="text" [(ngModel)]="data.customers.duressCode"
+                                        [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"   maxlength="6"></div>
+        </div>
+        <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΤΗΛΕΦΩΝΑ ΕΙΔΟΠΟΙΗΣΗΣ
+        </div>
+        <div *ngFor="let phoneNotice of data.customers.phoneNotices; let i = index;" class="row" style="width: 100%">
+          <div class="col-md-1">
+            <img src="assets/1a.png" style="position:relative;top:5px;">
+          </div>
+          <div class="col-md-7">
+            <input type="text" id="phoneNoticeName" value="{{phoneNotice.name}}" placeholder="Όνομα Επώνυμο"
+                   [(ngModel)]="data.customers.phoneNotices[i].name"
+                  [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+          <div class="col-md-3">
+            <input type="text" value="{{phoneNotice.phone}}" placeholder="Τηλέφωνο"
+                   [(ngModel)]="data.customers.phoneNotices[i].phone"
+                  [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+          <div class="col-md-1" style="cursor: pointer;" *ngIf="edit == true">
+            <mat-icon id="close" (click)="removePhoneNotice(i)"
+                      style="position:relative;top:8px;padding-left: 0; text-align: left;cursor: pointer;">close
+            </mat-icon>
+          </div>
+
+
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΤΗΛΕΦΩΝΑ ΚΑΙ ΩΡΕΣ ΑΜΕΣΗΣ ΕΠΕΜΒΑΣΗΣ
+          (24 ΩΡΕΣ ή 10μμ – 6πμ)
+        </div>
+        <div>
+            <textarea rows="6" [(ngModel)]="data.customers.directTransmissionPhones" class="directTransmission"
+                     [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></textarea>
+        </div>
+        <div class="text-left"
+             style="color:#060639;font-size: 12px;font-weight: bold;margin-top:10px;padding-bottom: 10px;">
+          ΕΙΔΟΣ ΑΣΦΑΛΙΖΟΜΕΝΟΥ ΧΩΡΟΥ
+        </div>
+        <div class="col-lg-12">
+          <ul>
+            <li>
+              <input #store name="typeInsuredArea" id="radio" type="radio" value="store"
+                     [(ngModel)]="data.customers.insuredAreaType"
+                     [disabled]="edit == false">
+              <label>
+                Κατάστημα
+              </label>
+            </li>
+            <li>
+              <input #apartment name="typeInsuredArea" id="radio" type="radio" value="apartment"
+                     [(ngModel)]="data.customers.insuredAreaType"
+                     [disabled]="edit == false">
+              <label>
+                Διαμέρισμα
+              </label>
+            </li>
+            <li>
+              <input #office name="typeInsuredArea" id="radio" type="radio" value="office"
+                     [(ngModel)]="data.customers.insuredAreaType"
+                     [disabled]="edit == false">
+              <label>
+                Γραφείο
+              </label>
+            </li>
+            <li>
+              <input #office name="typeInsuredArea" id="radio" type="radio" value="detachedHouse"
+                     [(ngModel)]="data.customers.insuredAreaType"
+                     [disabled]="edit == false">
+              <label>
+                Μονοκατοικία
+              </label>
+            </li>
+            <li>
+              <input #office name="typeInsuredArea" id="radio" type="radio" value="other"
+                     [(ngModel)]="data.customers.insuredAreaType"
+                     [disabled]="edit == false">
+              <label>
+                Άλλο
+              </label>
+              <input type="text" id="otherText" [(ngModel)]="data.customers.insuredAreaTypeOther"
+                     style="background:white !important;"
+                     *ngIf="data.customers.insuredAreaType == 'other'"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+            </li>
+          </ul>
+        </div>
+
+        <div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px"> ΖΩΝΟΠΟΙΗΣΗ ΣΥΣΤΗΜΑΤΟΣ
+
+          </div>
+          <div  style="overflow-y:auto;overflow-x:hidden;max-height:190px;">
+            <div *ngFor="let zone of data.customers.zones; let i = index;" class="row">
+              <div class="col-md-1">
+                <img src="assets/1a.png" style="position:relative;top:5px;">
+              </div>
+              <div class="col-md-2">
+                <input type="text" value="{{zone.id}}" placeholder="id"
+                       [(ngModel)]="data.customers.zones[i].idByUser"
+                       [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+              </div>
+              <div class="col-md-7">
+                <input type="text" value="{{zone.name}}" placeholder="Όνομα"
+                       [(ngModel)]="data.customers.zones[i].name"
+                      [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+              </div>
+
+              <div class="col-md-2" *ngIf="edit == true">
+                <mat-icon id="close" (click)="removeZone(i)"
+                          style="position:relative;top:8px;cursor: pointer;padding-left: 0; text-align: left">close
+                </mat-icon>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+        <div>
+
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">  ΟΝΟΜΑΤΑ ΧΡΗΣΤΩΝ
+            ΣΥΝΑΓΕΡΜΟΥ
+
+          </div>
+          <div  style="overflow-y:auto;overflow-x:hidden;max-height:190px;">
+            <div *ngFor="let user of data.customers.alarmUsers; let i = index;" class="row">
+              <div class="col-md-1">
+                <img src="assets/1a.png" style="position:relative;top:5px;">
+              </div>
+              <div class="col-md-2">
+                <input type="text" value="{{user.name}}" placeholder="id"
+                       [(ngModel)]="data.customers.alarmUsers[i].name"
+                       [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+              </div>
+              <div class="col-md-7">
+                <input type="text" value="{{user.username}}" placeholder="Όνομα"
+                       [(ngModel)]="data.customers.alarmUsers[i].username"
+                       [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+              </div>
+
+              <div class="col-md-2" *ngIf="edit == true">
+                <mat-icon id="close" (click)="removeUser(i)"
+                          style="position:relative;top:8px;cursor: pointer;padding-left: 0; text-align: left">close
+                </mat-icon>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+          ΑΝΑΛΥΤΙΚΗ ΠΕΡΙΓΡΑΦΗ (ΟΔΗΓΙΕΣ) ΑΣΦΑΛΙΖΟΜΕΝΟΥ ΧΩΡΟΥ
+          <textarea rows="6" class="insuredAreaDescription" [(ngModel)]="data.customers.insuredAreaDescription"
+                    style="font-size:15px;"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+            </textarea>
+        </div>
+        <div>
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">EXTRA ΠΑΡΑΤΗΡΗΣΕΙΣ
+          </div>
+          <div>
+              <textarea rows="6" [(ngModel)]="data.customers.otherRemarks" class="otherRemarks"
+                       [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></textarea>
+          </div>
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold;margin-top:10px;padding-left: 0;">
+          ΤΥΠΟΣ ΜΟΝΑΔΟΣ ΣΥΝΑΓΕΡΜΟΥ
+          <div>
+            <textarea rows="6" class="alarmType" [(ngModel)]="data.customers.alarmUnitType"
+                      style="font-size:15px;"
+                     [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+            </textarea>
+          </div>
+        </div>
+
+
+        <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+          FORMAT
+          <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+            <ul id="format">
+              <li>
+                <input #cid name="format" id="radio" type="radio" value="cid"
+                       [(ngModel)]="data.customers.format"
+                       [disabled]="edit == false">
+                <label>
+                  CID
+                </label>
+              </li>
+              <li>
+                <input #sia name="format" id="radio" type="radio" value="sia"
+                       [(ngModel)]="data.customers.format"
+                       [disabled]="edit == false">
+                <label>
+                  SIA
+                </label>
+              </li>
+              <li>
+                <input #fourplustwo name="format" id="radio" type="radio" value="fourplustwo"
+                       [(ngModel)]="data.customers.format"
+                       [disabled]="edit == false">
+                <label>
+                  4 + 2
+                </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="padding-left: 0; ">
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΑΣΤΥΝΟΜΙΚΟ ΤΜΗΜΑ ΠΕΡΙΟΧΗΣ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.customers.policeStation"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+        </div>
+
+
+        <div class="text-left" style="color:#060639;font-size: 12px;font-weight: bold; margin-top: 10px;">
+          ΗΜΕΡΟΜΗΝΙΑ ΣΥΝΔΕΣΗΣ ΠΕΛΑΤΗ
+        </div>
+        <div>
+          <input matInput [matDatepicker]="picker" placeholder="Επιλέξτε ημερομηνία"
+                 [(ngModel)]="data.customers.customerConnectionDate"
+                 style="border: none;
+                      border-radius: 5px;
+                      font-size: 14px;width: 91%;padding-left: 5px"
+                [readonly]=true  >
+          <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="edit == false"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </div>
+
+
+
+        <div class="text-left" style="color:#060639;font-size: 16px;font-weight: bold; margin-top: 20px;">
+          ΥΠΗΡΕΣΙΕΣ
+        </div>
+
+        <div class="" style="display: flex">
+
+          <div class="col-md-4">
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              MONITORING
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="monitoring">
+                  <li>
+                    <input #cid name="monitoring" id="radio" type="radio" value="Basic"
+                           [(ngModel)]="data.customers.sevriceMonitoring"
+                           [disabled]="edit == false">
+                    <label>
+                      Basic
+                    </label>
+                  </li>
+                  <li>
+                    <input #sia name="monitoring" id="radio" type="radio" value="Advanced"
+                           [(ngModel)]="data.customers.sevriceMonitoring"
+                           [disabled]="edit == false">
+                    <label>
+                      Advanced
+                    </label>
+                  </li>
+
+                </ul>
+              </div>
+
+            </div>
+
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              ACCESS
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="access">
+                  <li>
+                    <input #cid name="access" id="radio" type="radio" value="Child Monitoring"
+                           [(ngModel)]="data.customers.serviceAccess"
+                           [disabled]="edit == false">
+                    <label>
+                      Child Monitoring        (Timeframe)
+                    </label>
+                  </li>
+                  <li>
+                    <input #sia name="access" id="radio" type="radio" value="O/C"
+                           [(ngModel)]="data.customers.serviceAccess"
+                           [disabled]="edit == false">
+                    <label>
+                      O/C                              (Timeframe)
+
+                    </label>
+                  </li>
+                  <li>
+                    <input #sia name="access" id="radio" type="radio" value="O/C Advanced "
+                           [(ngModel)]="data.customers.serviceAccess"
+                           [disabled]="edit == false">
+                    <label>
+                      O/C Advanced            (Timeframe)
+
+                    </label>
+                  </li>
+
+                </ul>
+              </div>
+
+            </div>
+
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              COMMUNICATION
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="communication">
+                  <li>
+                    <input #cid name="communication" id="radio" type="radio" value="Network Polling"
+                           [(ngModel)]="data.customers.serviceCommunication"
+                           [disabled]="edit == false">
+                    <label>
+                      Network Polling
+                    </label>
+                  </li>
+                  <li>
+                    <input #sia name="communication" id="radio" type="radio" value="GSM Polling"
+                           [(ngModel)]="data.customers.serviceCommunication"
+                           [disabled]="edit == false">
+                    <label>
+                      GSM Polling
+
+                    </label>
+                  </li>
+
+
+                </ul>
+              </div>
+
+            </div>
+
+
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              TEST
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="test">
+
+
+                  <li>
+                  <input #cid name="test" id="radio" type="radio" value="24h"
+                         [(ngModel)]="data.customers.serviceTest"
+                         [disabled]="edit == false">
+                  <label>
+                    24h
+                  </label>
+                  </li>
+
+                  <li>
+                    <input #cid name="test" id="radio" type="radio" value="12h"
+                           [(ngModel)]="data.customers.serviceTest"
+                           [disabled]="edit == false">
+                    <label>
+                      12h
+                    </label>
+                  </li>
+
+                  <li>
+                    <input #cid name="test" id="radio" type="radio" value="1h"
+                           [(ngModel)]="data.customers.serviceTest"
+                           [disabled]="edit == false">
+                    <label>
+                      1h
+                    </label>
+                  </li>
+
+
+
+
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              REPORTS
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="reports">
+                  <li>
+                    <input #cid name="reports" id="radio" type="radio" value="Report-W"
+                           [(ngModel)]="data.customers.serviceReport"
+                           [disabled]="edit == false">
+                    <label>
+                      Report-W
+                    </label>
+                  </li>
+                  <li>
+                    <input #cid name="reports" id="radio" type="radio" value="Report-D"
+                           [(ngModel)]="data.customers.serviceReport"
+                           [disabled]="edit == false">
+                    <label>
+                      Report-D
+                    </label>
+                  </li>
+
+
+                </ul>
+              </div>
+
+            </div>
+
+
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              CCTV
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="cctv">
+                  <li>
+                    <input #cid name="cctv" id="radio" type="radio" value="CCTV 4 CAM"
+                           [(ngModel)]="data.customers.serviceCctv"
+                           [disabled]="edit == false">
+                    <label>
+                      CCTV 4 CAM
+                    </label>
+                  </li>
+                  <li>
+                    <input #cid name="cctv" id="radio" type="radio" value="CCTV 10 CAM"
+                           [(ngModel)]="data.customers.serviceCctv"
+                           [disabled]="edit == false">
+                    <label>
+                      CCTV 10 CAM
+                    </label>
+                  </li>
+                  <li>
+                    <input #cid name="cctv" id="radio" type="radio" value="CCTV PLUS CAM"
+                           [(ngModel)]="data.customers.serviceCctv"
+                           [disabled]="edit == false">
+                    <label>
+                      CCTV PLUS CAM
+                    </label>
+                  </li>
+
+
+                </ul>
+              </div>
+
+            </div>
+
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              24/7 MONITORING
+
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="247monitoring">
+                  <li>
+                    <input #cid name="247monitoring" id="radio" type="radio" value="24/7 Zone"
+                           [(ngModel)]="data.customers.service247Monitoring"
+                           [disabled]="edit == false">
+                    <label>
+                      24/7 Zone
+                    </label>
+                  </li>
+                  <li>
+                    <input #cid name="247monitoring" id="radio" type="radio" value="Industrial Zone"
+                           [(ngModel)]="data.customers.service247Monitoring"
+                           [disabled]="edit == false">
+                    <label>
+                      Industrial Zone
+                    </label>
+                  </li>
+
+
+
+                </ul>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="col-4">
+            <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">
+              GLOBAL SIM
+
+              <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">
+                <ul id="globalsim">
+                  <li>
+                    <input #cid name="globalsim" id="radio" type="radio" value="Q-Fee"
+                           [(ngModel)]="data.customers.serviceGlobalSim"
+                           [disabled]="edit == false">
+                    <label>
+                      Q-Fee
+                    </label>
+                  </li>
+
+
+
+
+                  <li>
+                    <input #cid name="globalsim" id="radio" type="radio" value="Q-Fee Plus"
+                           [(ngModel)]="data.customers.serviceGlobalSim"
+                           [disabled]="edit == false">
+                    <label>
+                      Q-Fee Plus
+                    </label>
+                  </li>
+
+                  <li>
+                    <input #cid name="globalsim" id="radio" type="radio" value="UltraSync"
+                           [(ngModel)]="data.customers.serviceGlobalSim"
+                           [disabled]="edit == false">
+                    <label>
+                      UltraSync
+                    </label>
+                  </li>
+
+                  <li>
+                    <input #cid name="globalsim" id="radio" type="radio" value="CHeKT"
+                           [(ngModel)]="data.customers.serviceGlobalSim"
+                           [disabled]="edit == false">
+                    <label>
+                      CHeKT
+                    </label>
+                  </li>
+
+                  <li>
+                    <input #cid name="globalsim" id="radio" type="radio" value="OTHER"
+                           [(ngModel)]="data.customers.serviceGlobalSim"
+                           [disabled]="edit == false">
+                    <label>
+                      OTHER
+                    </label>
+                  </li>
+
+
+
+
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+      <!--      <div class="col-md-3" style="padding-top:30px;">-->
+<!--        <label style="font-size:20px;color:#060639;font-weight: bold;">ΠΕΛΑΤΗΣ</label>-->
+<!--        -->
+<!--        -->
+<!--        -->
+<!--        -->
+<!--        <div class="text-left" style="color:#060639;font-size: 12px;font-weight: bold;">-->
+<!--          ΒΟΗΘΗΤΙΚΟΣ ΚΩΔΙΚΟΣ ΠΕΛΑΤΗ (PASSCODE 20 ψηφία)-->
+<!--        </div>-->
+<!--        <div><input type="text" [(ngModel)]="data.customers.customerAuxiliaryPass" style="background: #fff;" [readonly]="edit == false  || role=='admin'"></div>-->
+<!--        <div>-->
+<!--          <div class="text-left" style="color:#060639;font-size: 12px;font-weight: bold; margin-top: 10px;">-->
+<!--            ΗΜΕΡΟΜΗΝΙΑ ΣΥΝΔΕΣΗΣ ΠΕΛΑΤΗ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input matInput [matDatepicker]="picker" placeholder="Επιλέξτε ημερομηνία" [(ngModel)]="data.customers.customerConnectionDate"-->
+<!--              style="border: none;border-radius: 5px;font-size: 14px;width: 89%;padding-left: 5px;outline: 0"-->
+<!--              [readonly]="true">-->
+<!--            <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="(edit == false && role == 'cc') || (edit ==false && role=='acc')|| role=='admin'"></mat-datepicker-toggle>-->
+<!--            <mat-datepicker #picker></mat-datepicker>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-12" style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;padding-left: 0;">ΔΙΕΥΘΥΝΣΗ-->
+<!--          ΑΣΦΑΛΙΖΟΜΕΝΟΥ ΧΩΡΟΥ-->
+<!--        </div>-->
+<!--        <div style="color:#060639; opacity: 0.7;font-size: 12px;">-->
+<!--          Πόλη-->
+<!--        </div>-->
+<!--        <div style="padding-left:0">-->
+<!--          <input type="text" [(ngModel)]="data.customers.insuredAreaCity" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'">-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="col-7 col-lg-7" style="color:#060639; opacity: 0.7;font-size: 12px;padding-top: 10px;">-->
+<!--            Οδός - Αριθμός-->
+<!--          </div>-->
+<!--          <div class="col-3 col-lg-3" style="margin-top:10px;color:#060639; opacity: 0.7;font-size: 12px;padding-left: 0px">-->
+<!--            Τ.Κ-->
+<!--          </div>-->
+<!--          <div class="col-2 col-lg-2" style="margin-top:10px;color:#060639; opacity: 0.7;font-size: 12px;padding-left: 0px">-->
+<!--            Όροφος-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="col-7 col-lg-7">-->
+<!--            <input type="text" [(ngModel)]="data.customers.insuredAreaAddress" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'">-->
+<!--          </div>-->
+<!--          <div class="col-3 col-lg-3" style="padding-left:0">-->
+<!--            <input type="text" [(ngModel)]="data.customers.insuredAreaPostCode" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'">-->
+<!--          </div>-->
+<!--          <div class="col-2 col-lg-2" style="padding-left:0">-->
+<!--            <input type="text" [(ngModel)]="data.customers.insuredAreaFloor" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'">-->
+<!--          </div>-->
+<!--        </div>-->
+
+
+<!--        <div class="text-left" style="color:#060639;font-size: 12px;font-weight: bold;margin-top:10px;padding-bottom: 10px;">-->
+<!--          ΕΙΔΟΣ ΑΣΦΑΛΙΖΟΜΕΝΟΥ ΧΩΡΟΥ-->
+<!--        </div>-->
+
+<!--        <div class="col-lg-12">-->
+<!--          <ul>-->
+<!--            <li>-->
+<!--              <input #store name="typeInsuredArea" id="radio" type="radio" value="store" [(ngModel)]="data.customers.insuredAreaType"-->
+<!--                [disabled]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'">-->
+<!--              <label>-->
+<!--                Κατάστημα-->
+<!--              </label>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <input #apartment name="typeInsuredArea" id="radio" type="radio" value="apartment" [(ngModel)]="data.customers.insuredAreaType"-->
+<!--                [disabled]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'">-->
+<!--              <label>-->
+<!--                Διαμέρισμα-->
+<!--              </label>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <input #office name="typeInsuredArea" id="radio" type="radio" value="office" [(ngModel)]="data.customers.insuredAreaType"-->
+<!--                [disabled]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'">-->
+<!--              <label>-->
+<!--                Γραφείο-->
+<!--              </label>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <input #office name="typeInsuredArea" id="radio" type="radio" value="detachedHouse" [(ngModel)]="data.customers.insuredAreaType"-->
+<!--                [disabled]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'">-->
+<!--              <label>-->
+<!--                Μονοκατοικία-->
+<!--              </label>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <input #office name="typeInsuredArea" id="radio" type="radio" value="other" [(ngModel)]="data.customers.insuredAreaType"-->
+<!--                [disabled]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--              <label>-->
+<!--                Άλλο-->
+<!--              </label>-->
+<!--              <input type="text" id="otherText" [(ngModel)]="data.customers.insuredAreaTypeOther" style="background:white !important;"-->
+<!--                *ngIf="data.customers.insuredAreaType == 'other'" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'">-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--        <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΤΗΛΕΦΩΝΑ ΕΙΔΟΠΟΙΗΣΗΣ-->
+<!--          &lt;!&ndash; <mat-icon id="addCircle" style="position: relative;top: 6px;left: 10px;cursor: pointer;" (click)="addPhoneNotice()">-->
+<!--            add_circle-->
+<!--          </mat-icon> &ndash;&gt;-->
+<!--        </div>-->
+<!--        <div *ngIf="index != -1" style="overflow-y:auto;overflow-x:hidden;max-height:190px;">-->
+<!--          <div *ngFor="let phoneNotice of data.customers.phoneNotices; let i = index;" class="row">-->
+<!--            <div class="col-md-1">-->
+<!--              <img src="assets/1a.png" style="position:relative;top:5px;">-->
+<!--            </div>-->
+<!--            <div class="col-md-5">-->
+<!--              <input type="text" id="phoneNoticeName" value="{{phoneNotice.name}}" placeholder="Όνομα" [(ngModel)]="data.customers.phoneNotices[i].name"-->
+<!--                [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--              <input type="text" value="{{phoneNotice.phone}}" placeholder="Τηλέφωνο" [(ngModel)]="data.customers.phoneNotices[i].phone"-->
+<!--                [readonly]="(edit == false && role == 'cc') || (role == 'acc') || role=='admin'">-->
+<!--            </div>-->
+<!--            <div class="col-md-2" style="cursor: pointer;" *ngIf="(edit == true && role == 'cc')">-->
+<!--              <mat-icon id="close" (click)="removePhoneNotice(i)" style="position:relative;top:8px;padding-left: 0; text-align: left;cursor: pointer;">close</mat-icon>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΖΩΝΟΠΟΙΗΣΗ ΣΥΣΤΗΜΑΤΟΣ-->
+<!--          &lt;!&ndash; <mat-icon id="addCircle" style="position: relative;top: 6px;left: 10px;cursor: pointer;" (click)="addZone()">-->
+<!--            add_circle-->
+<!--          </mat-icon> &ndash;&gt;-->
+<!--        </div>-->
+<!--        <div *ngIf="index != -1" style="overflow-y:auto;overflow-x:hidden;max-height:190px;">-->
+<!--          <div *ngFor="let zone of data.customers.zones; let i = index;" class="row">-->
+<!--            <div class="col-md-1">-->
+<!--              <img src="assets/1a.png" style="position:relative;top:5px;">-->
+<!--            </div>-->
+<!--            <div class="col-md-5">-->
+<!--              <input type="text" value="{{zone.name}}" placeholder="Όνομα" [(ngModel)]="data.customers.zones[i].name"-->
+<!--                [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--              <input type="text" value="{{zone.id}}" placeholder="id" [(ngModel)]="data.customers.zones[i].idByUser"-->
+<!--                [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--            </div>-->
+<!--            <div class="col-md-2" *ngIf="(edit == true && role == 'cc')">-->
+<!--              <mat-icon id="close" (click)="removeZone(i)" style="position:relative;top:8px;cursor: pointer;padding-left: 0; text-align: left">close</mat-icon>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px" class="users">ΟΝΟΜΑΤΑ ΧΡΗΣΤΩΝ-->
+<!--          ΣΥΝΑΓΕΡΜΟΥ-->
+<!--          &lt;!&ndash; <mat-icon id="addCircle" style="position: relative;top: 6px;left: 10px;cursor: pointer;" (click)="addUser()">-->
+<!--            add_circle-->
+<!--          </mat-icon> &ndash;&gt;-->
+<!--        </div>-->
+<!--        <div *ngIf="index != -1" style="overflow-y:auto;overflow-x:hidden;max-height:190px;">-->
+
+<!--          <div *ngFor="let user of data.customers.alarmUsers; let i = index;" class="row">-->
+<!--            <div class="col-md-1">-->
+<!--              <img src="assets/1a.png" style="position:relative;top:5px;">-->
+<!--            </div>-->
+<!--            <div class="col-md-5">-->
+<!--              <input type="text" value="{{user.username}}" placeholder="Όνομα" [(ngModel)]="data.customers.alarmUsers[i].username"-->
+<!--                [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--            </div>-->
+<!--            <div class="col-md-4">-->
+<!--              <input type="text" value="{{user.name}}" placeholder="id" [(ngModel)]="data.customers.alarmUsers[i].name"-->
+<!--                [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--            </div>-->
+<!--            <div class="col-md-2" *ngIf="(edit == true && role == 'cc')">-->
+<!--              <mat-icon id="close" (click)="removeUser(i)" style="position:relative;top:8px;cursor: pointer;padding-left: 0; text-align: left">close</mat-icon>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΤΗΛΕΦΩΝΑ ΑΜΕΣΗΣ ΕΠΕΜΒΑΣΗΣ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <textarea rows="6" [(ngModel)]="data.customers.directTransmissionPhones" class="directTransmission"-->
+<!--              [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'"></textarea>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">EXTRA ΠΑΡΑΤΗΡΗΣΕΙΣ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <textarea rows="6" [(ngModel)]="data.customers.otherRemarks" class="otherRemarks" [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'"></textarea>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-md-3" style="padding-top:69px;">-->
+<!--        <div>-->
+<!--          <div style="font-size:12px;color:#060639;font-weight: bold;">ΚΩΔΙΚΟΣ ΠΕΛΑΤΗ (CSID 6 ψηφία)</div>-->
+<!--          <div><input type="text" [(ngModel)]="data.customers.customerPass" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc')  || role=='admin'"></div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΚΩΔΙΚΟΣ ΑΠΕΙΛΗΣ DURESS CODE (6-->
+<!--            ψηφία)</div>-->
+<!--          <div><input id="customerCode" type="text" [(ngModel)]="data.customers.duressCode" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"></div>-->
+<!--        </div>-->
+<!--        <div class="eponymia">-->
+<!--          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΕΠΩΝΥΜΙΑ ΣΥΝΔΡΟΜΗΤΗ</div>-->
+<!--          <div><input id="customerName" type="text" [(ngModel)]="data.customers.subscriberName" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"></div>-->
+<!--        </div>-->
+
+<!--        <div class="tilefono">-->
+<!--          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΤΗΛΕΦΩΝΟ ΧΩΡΟΥ</div>-->
+<!--          <div><input type="text" [(ngModel)]="data.customers.areaPhone" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"></div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="font-size:12px;color:#060639;font-weight: bold;margin-top: 10px;">ΑΦΜ</div>-->
+<!--          <div><input type="text" [(ngModel)]="data.customers.afm" [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"></div>-->
+<!--        </div>-->
+
+<!--        <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">-->
+<!--          ΑΝΑΛΥΤΙΚΗ ΠΕΡΙΓΡΑΦΗ (ΟΔΗΓΙΕΣ) ΑΣΦΑΛΙΖΟΜΕΝΟΥ ΧΩΡΟΥ-->
+<!--          <textarea rows="6" class="insuredAreaDescription" [(ngModel)]="data.customers.insuredAreaDescription" style="font-size:15px;"-->
+<!--            [readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'">-->
+<!--              </textarea>-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold;margin-top:10px;padding-left: 0;">-->
+<!--          ΤΥΠΟΣ ΜΟΝΑΔΟΣ ΣΥΝΑΓΕΡΜΟΥ-->
+<!--          <div>-->
+<!--            <textarea rows="6" class="alarmType" [(ngModel)]="data.customers.alarmUnitType" style="font-size:15px;"-->
+<!--              [readonly]="(edit == false && role == 'cc') || role=='acc' || role=='admin'">-->
+<!--              </textarea>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div style="margin-top:10px;color:#060639;font-size: 12px;font-weight: bold;padding-left: 0;">-->
+<!--          FORMAT-->
+<!--          <div style="color:#000000 !important; font-weight: 300 !important;padding-top: 10px">-->
+<!--            <ul id="format">-->
+<!--              <li>-->
+<!--                <input #cid name="format" id="radio" type="radio" value="cid" [(ngModel)]="data.customers.format"-->
+<!--                  [disabled]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--                <label>-->
+<!--                  CID-->
+<!--                </label>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <input #sia name="format" id="radio" type="radio" value="sia" [(ngModel)]="data.customers.format"-->
+<!--                  [disabled]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--                <label>-->
+<!--                  SIA-->
+<!--                </label>-->
+<!--              </li>-->
+<!--              <li>-->
+<!--                <input #fourplustwo name="format" id="radio" type="radio" value="fourplustwo" [(ngModel)]="data.customers.format"-->
+<!--                  [disabled]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--                <label>-->
+<!--                  4 + 2-->
+<!--                </label>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px;">-->
+<!--          ΣΥΧΝΟΤΗΤΑ 24 ΩΡΟΥ ΤΕΣΤ-->
+<!--          <div>-->
+<!--            <select [(ngModel)]="data.customers.frequency24HourTest" style="font-size: 16px;width:100%;border-radius: 5px;border: 0;outline: 0;"-->
+<!--              [disabled]="(edit == false && role == 'cc') || (role == 'acc') || role=='admin'">-->
+<!--              <option *ngFor="let testDuration of testDurations;">{{testDuration}}</option>-->
+<!--            </select>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div style="margin-top:10px;padding-left: 0;color:#060639;font-size: 12px;font-weight: bold;">-->
+<!--          ΕΒΔΟΜΑΔΙΑΙΟ ΩΡΑΡΙΟ ON/OFF ΠΑΡΑΚΟΛΟΥΘΗΣΗΣ-->
+<!--          <div>-->
+<!--            <textarea rows="6" [(ngModel)]="data.customers.weeklyTimeMonitoring" class="weeklyMonitoring" [readonly]="(edit == false && role == 'cc') || (role == 'acc') || role=='admin'"></textarea>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div style="padding-left: 0;">-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold;">ΩΡΕΣ ΕΛΕΓΧΟΥ ΕΠΕΜΒΑΣΗΣ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="text" [(ngModel)]="data.customers.operationControllHours" [readonly]="(edit == false && role == 'cc') || (role == 'acc') || role=='admin'">-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div style="padding-left: 0;">-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΑΣΤΥΝΟΜΙΚΟ ΤΜΗΜΑ ΠΕΡΙΟΧΗΣ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="text" [(ngModel)]="data.customers.policeStation" [readonly]="(edit == false && role == 'cc') || (role == 'acc') || role=='admin'">-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div style="padding-left: 0;">-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΜΗΝΙΑΙΑ ΛΙΣΤΑ ΣΥΝΑΓΕΡΜΟΥ-->
+<!--            (REPORT)-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="text" [(ngModel)]="data.customers.monthlyAlarmList" [readonly]="(edit == false && role == 'cc') || (role == 'acc')  || role=='admin'">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="col-md-3" style="padding-top:30px;"><label style="font-size:20px;color:#060639;font-weight: bold;">ΕΓΚΑΤΑΣΤΑΤΗΣ</label>
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΕΠΩΝΥΜΟ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.lastName"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΝΟΜΑ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.name"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΝΟΜΑ ETΑΙΡΙΑΣ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.companyName"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΔΟΣ\ΑΡΙΘΜΟΣ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.installerInsuredAreaAddress"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div>
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΟΛΗ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerInsuredAreaCity"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+          </div>
+        </div>
+
+
+        <div>
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΕΡΙΓΡΑΦΗ ΕΠΑΓΓΕΛΜΑΤΟΣ
+          </div>
+          <div>
+            <textarea type="text" [(ngModel)]="data.installerProffesionalDescription"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  ></textarea>
+          </div>
+        </div>
+
+
+
+
+
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">Α.Φ.Μ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.installerAfm"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΔΟΥ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.doy"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΤΗΛΕΦΩΝΟ ΧΩΡΟΥ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.installerLandlinePhone"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+
+
+
+
+
+      </div>
+
+      <div class="col-md-3" style="padding-top:69px;">
+
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">FAX
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.fax"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΚΙΝΗΤΟ
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.installerMobilePhone"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΕΜΑΙL
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.emailins"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">WEBSITE
+        </div>
+        <div>
+          <input type="text" [(ngModel)]="data.installerWebsite"[readonly]="(edit == false && role == 'cc') || (edit ==false && role=='acc') || role=='admin'"  >
+        </div>
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΟΛΙΤΙΚΗ ΕΙΣΠΡΑΞΗΣ
+        </div>
+        <div>
+          <input type="radio" name="radio1" value="selfCollection" [(ngModel)]="data.installerCollectionPolicy"
+                 style="margin-right:5px;" [disabled]="edit == false">
+          <label style="color:black;">Είσπραξη από τον ίδιο</label>
+        </div>
+
+        <div>
+          <input type="radio" name="radio1" value="hdmsCollection" [(ngModel)]="data.installerCollectionPolicy"
+                 style="margin-right:5px;" [disabled]="edit == false">
+          <label style="color:black;">Είσπραξη από την HDMS</label>
+        </div>
+
+
+        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">EMAIL INVOICE
+        </div>
+        <div>
+          <input type="radio" name="radio2" value="yes" [(ngModel)]="data.emailInvoice" style="margin-right:5px;"
+                 [disabled]="edit == false">
+          <label style="color:black;">Ναι</label>
+        </div>
+
+        <div>
+          <input type="radio" name="radio2" value="no" [(ngModel)]="data.emailInvoice" style="margin-right:5px;"
+                 [disabled]="edit == false">
+          <label style="color:black;">Όχι</label>
+        </div>
+
+
+
+
+        <div>
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">BILLING ADDRESS ONLY
+          </div>
+          <div>
+            <input type="radio" name="radio3" value="yes" [(ngModel)]="data.billingAddressOnly" style="margin-right:5px;"
+                   [disabled]="edit == false">
+            <label style="color:black;">Ναι</label>
+          </div>
+          <div>
+            <input type="radio" name="radio3" value="no" [(ngModel)]="data.billingAddressOnly" style="margin-right:5px;"
+                   [disabled]="edit == false">
+            <label style="color:black">Όχι</label>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+
+
+<!--      <div class="col-md-3" style="padding-top:30px;"><label style="font-size:20px;color:#060639;font-weight: bold;">ΕΓΚΑΤΑΣΤΑΤΗΣ</label>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΕΠΩΝΥΜΙΑ-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.name" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΕΡΙΓΡΑΦΗ ΕΠΑΓΓΕΛΜΑΤΟΣ-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <textarea rows="6" cols="40" [(ngModel)]="data.installerProffesionalDescription" [readonly]="true" style="opacity:0.5;"></textarea>-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΣΤΑΘΕΡΟ-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.installerLandlinePhone" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">FAX-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.fax" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΚΙΝΗΤΟ-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.installerMobilePhone" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">EMAIL-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.email" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">WEBSITE-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.installerWebsite" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="col-md-3" style="padding-top:69px;">-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">Α.Φ.Μ-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.installerAfm" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΔΟΣ\ΑΡΙΘΜΟΣ-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <input type="text" [(ngModel)]="data.installerInsuredAreaAddress" [readonly]="true" style="opacity:0.5;">-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΟΛΗ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="text" [(ngModel)]="data.installerInsuredAreaCity" [readonly]="true" style="opacity:0.5;">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">Τ.Κ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="text" [(ngModel)]="data.installerInsuredPostCode" [readonly]="true" style="opacity:0.5;">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΟΛΙΤΙΚΗ ΕΙΣΠΡΑΞΗΣ-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="radio" name="radio1" value="selfCollection" [(ngModel)]="data.installerCollectionPolicy" style="margin-right:5px;"-->
+<!--              [disabled]="true" style="opacity:0.5;">-->
+<!--            <label style="color:black;">Είσπραξη από τον ίδιο</label>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="radio" name="radio1" value="hdmsCollection" [(ngModel)]="data.installerCollectionPolicy" style="margin-right:5px;"-->
+<!--              [disabled]="true" style="opacity:0.5;">-->
+<!--            <label style="color:black">Είσπραξη από HDMS</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">EMAIL INVOICE-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="radio" name="radio2" value="yes" [(ngModel)]="data.emailInvoice" style="margin-right:5px;"-->
+<!--              [disabled]="true" style="opacity:0.5;">-->
+<!--            <label style="color:black;">Ναι</label>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="radio" name="radio2" value="no" [(ngModel)]="data.emailInvoice" style="margin-right:5px;"-->
+<!--              [disabled]="true" style="opacity:0.5;">-->
+<!--            <label style="color:black">Όχι</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">BILLING ADDRESS ONLY-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="radio" name="radio3" value="yes" [(ngModel)]="data.installerBillingAddressOnly" style="margin-right:5px;"-->
+<!--              [disabled]="true" style="opacity:0.5;">-->
+<!--            <label style="color:black;">Ναι</label>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <input type="radio" name="radio3" value="no" [(ngModel)]="data.installerBillingAddressOnly" style="margin-right:5px;"-->
+<!--              [disabled]="true" style="opacity:0.5;">-->
+<!--            <label style="color:black">Όχι</label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<mat-dialog-content>
+	<p>
+		Θέλετε όντως να διαγράψετε την σημείωση?
+	</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+	<button mat-raised-button style="background: #FFC200;color: #060639;padding: 0px 40px;font-weight: bold;margin-right: 10px;border-radius: 25px;outline:0;" (click)="onConfirmClick()" tabindex="-1">{{confirmButtonText}}</button>
+	<button mat-raised-button style="background: grey;color: white;padding: 0px 40px;font-weight: bold;margin-right: 10px;border-radius: 25px;" mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+</mat-dialog-actions>

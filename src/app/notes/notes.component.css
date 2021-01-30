@@ -1,0 +1,68 @@
+mat-icon {
+    font-family: 'Material Icons' !important;
+}
+
+.selected {
+    background-color: #060639 !important;
+}
+
+.selected div {
+    color: #FFC200 !important;
+}
+
+.selected div mat-icon {
+    color: #FFC200 !important;
+}
+
+.unselected:hover {
+    cursor: pointer !important;
+    background-color: rgba(68, 175, 222, 0.13) !important;
+}
+
+.notes-fields input[type='text'],
+.notes-fields textarea {
+    width: 70% !important;
+    background: #fff !important;
+    border-radius: 5px !important;
+    margin-top: 5px !important;
+    border: 0 !important;
+    padding-left: 5px !important;
+    font-size: 14px !important;
+}
+
+.notes-fields .datepicker {
+    width: 20% !important;
+    background: #fff !important;
+    border-radius: 5px !important;
+    margin-top: 5px !important;
+    border: 0 !important;
+    padding-left: 5px !important;   
+    font-size: 14px !important; 
+}
+
+.btn:focus{
+    outline: 0;
+    box-shadow: none;
+}
+
+textarea:focus{
+    outline: 0;
+    box-shadow: unset;
+}
+
+input:focus{
+    outline: 0;
+}
+
+input+label{
+    font-size: 14px;
+}
+
+textarea{
+    border: 1px solid rgba(0,0,0,.25) !important;
+    resize: none;
+}
+
+button.mat-menu-item{
+    outline: 0;
+}

@@ -1,0 +1,32 @@
+mat-sidenav-container{
+    height: 100%;
+}
+
+.mat-toolbar{
+    background: #F7F7F7;
+    opacity: 100%;
+}
+
+.mat-icon-button{
+    color:black;    
+}
+
+/* mat-sidenav{
+    /* background-image: url('assets/hellasbg.png'); 
+} */
+
+.mat-list-base .mat-list-item {
+    color: white;
+}
+
+@media (max-width:767px) { 
+    mat-sidenav{
+        width: 100%;
+    }    
+}
+
+.active-list-item{
+    background-color: #FFC200 !important; /* Note: You could also use a custom theme */
+    color: #070752 !important;
+    /* font-weight: bold !important;     */
+}

@@ -1,0 +1,41 @@
+<mat-menu #profileMenu="matMenu">
+  <button mat-menu-item (click)="goToProfile()">Αλλαγή στοιχείων</button>
+  <button mat-menu-item (click)="goToChangePassword()">Αλλαγή κωδικού</button>
+</mat-menu>
+
+
+
+<div class="col-12 col-lg-12" style="color:#ffffff;background: #060639;font-size: 14px;height: 40px;">
+  <div style="opacity:0.86;display:inline-block;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 18px;line-height: 40px;">
+    Ειδοποιήσεις
+  </div>
+  <div style="float:right">
+    <button class="btn" (click)="logOut()" style="background: #060639;color:#fabe02;font-size: 14px;padding: 0 25px;float:right;outline: 0;box-shadow: none;line-height: 37px;">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο
+        Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+    </button>
+    <button class="btn" style="float:right;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0;box-shadow: none;line-height: 37px;"
+      *ngIf="!isAdmin() && !isACC() && !isCC()" [matMenuTriggerFor]="profileMenu">
+      <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">account_circle</mat-icon>ΠΡΟΦΙΛ<mat-icon
+        style="color:#fabe02;position: relative;right:5px;top:6px;">arrow_drop_down</mat-icon>
+    </button>
+  </div>
+</div>
+
+
+
+<div class="text-center" style="padding-top: 30px;background-color: #F4F4F4;height: 100vh;">
+  <div style="font-weight: bold;color: #060639;">
+    <input [(ngModel)]="title" style="width: 665px !important;outline: 0;padding-left: 5px;border:0;" placeholder="Τίτλος Ειδοποίησης">
+  </div>
+  <div style="font-weight: bold;color: #060639;">
+    <textarea [(ngModel)]="message" cols="81" rows="10" placeholder="Παρακαλώ εισάγετε το μήνυμα σας" style="background: #fff !important;
+    border-radius: 5px;
+    margin-top: 5px;
+    border: 0;
+    padding-left: 5px;
+    outline: 0;
+    resize: none;"></textarea>
+  </div>
+  <button class="btn sendButton" (click)="sendMessage()">ΑΠΟΣΤΟΛΗ ΕΙΔΟΠΟΙΗΣΗΣ</button>
+</div>

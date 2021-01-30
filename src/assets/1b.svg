@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 18 18">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-Artboard_2);
+      }
+
+      .cls-2 {
+        fill: #ababbb;
+      }
+    </style>
+    <clipPath id="clip-Artboard_2">
+      <rect width="18" height="18"/>
+    </clipPath>
+  </defs>
+  <g id="Artboard_2" data-name="Artboard – 2" class="cls-1">
+    <g id="Group_192" data-name="Group 192" transform="translate(-25.311 -513.339)">
+      <ellipse id="Ellipse_34" data-name="Ellipse 34" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(34.72 519.508)"/>
+      <ellipse id="Ellipse_41" data-name="Ellipse 41" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(26.875 519.508)"/>
+      <ellipse id="Ellipse_37" data-name="Ellipse 37" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(38.642 516.893)"/>
+      <ellipse id="Ellipse_45" data-name="Ellipse 45" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(26.875 514.278)"/>
+      <ellipse id="Ellipse_44" data-name="Ellipse 44" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(34.72 514.278)"/>
+      <ellipse id="Ellipse_43" data-name="Ellipse 43" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(30.797 527.352)"/>
+      <ellipse id="Ellipse_39" data-name="Ellipse 39" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(30.797 516.893)"/>
+      <ellipse id="Ellipse_33" data-name="Ellipse 33" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(34.72 524.397)"/>
+      <ellipse id="Ellipse_40" data-name="Ellipse 40" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(26.875 524.397)"/>
+      <ellipse id="Ellipse_36" data-name="Ellipse 36" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(38.642 521.782)"/>
+      <ellipse id="Ellipse_42" data-name="Ellipse 42" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(38.642 527.012)"/>
+      <ellipse id="Ellipse_38" data-name="Ellipse 38" class="cls-2" cx="1.582" cy="1.582" rx="1.582" ry="1.582" transform="translate(30.797 521.782)"/>
+    </g>
+  </g>
+</svg>

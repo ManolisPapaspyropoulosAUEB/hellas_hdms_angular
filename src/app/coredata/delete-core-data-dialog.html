@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <p>
+    Είστε σίγουροι ότι θέλετε να διαγράψετε αυτήν την εγγραφή?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button class="btn" style="background: #FFC200 !important;color: #060639 !important;padding: 5px 40px !important;font-weight: bold !important;border-radius: 25px !important;outline: 0"
+          (click)="onConfirmClick()">
+    ΝΑΙ
+  </button>
+  <button class="btn" style="background: grey !important;color: white !important;padding: 5px 40px !important;font-weight: bold !important;border-radius: 25px !important;margin-left: 10px;"
+          mat-dialog-close (click)="onNoClick()">
+    ΟΧΙ
+  </button>
+</mat-dialog-actions>

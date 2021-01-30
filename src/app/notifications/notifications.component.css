@@ -1,0 +1,7 @@
+.sendButton{
+    background: #FFC200 !important;
+    color: #060639 !important;
+    padding: 5px 20px !important;
+    font-weight: bold !important;    
+    border-radius: 25px !important; 
+}

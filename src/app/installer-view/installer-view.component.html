@@ -1,0 +1,183 @@
+<div style="background-color: #F4F4F4;height: 100vh;">
+  <div>
+    <div class="col-12 col-lg-12" style="color:#ffffff;background: #060639;font-size: 14px;height: 40px;">
+      <div style="opacity:0.86;display:inline-block;margin-left: 10px;font-family: Arial, Helvetica, sans-serif;color: #FFC200 !important;font-size: 18px;line-height: 37px">
+        <mat-icon style="position:relative;top:6px;cursor:pointer;" (click)="goBack()">keyboard_arrow_left
+        </mat-icon>Εγκαταστάτης
+      </div>
+      <div style="float:right;">
+        <button class="btn" style="margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+          *ngIf="edit == true" (click)="submit()">
+          <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">send</mat-icon>ΥΠΟΒΟΛΗ
+        </button>
+        <button class="btn" style="margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+          *ngIf="edit == false && !isAdmin()" (click)="changeToEdit()">
+          <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">edit</mat-icon>ΕΠΕΞΕΡΓΑΣΙΑ
+        </button>
+        <button class="btn" (click)="cancel()" style="margin-right:10px;background-color:#060639;color:#fabe02;font-size: 14px;padding: 0 25px;outline: 0 !important;box-shadow: none !important;line-height: 37px;"
+          *ngIf="edit == true && !isAdmin()">
+          <mat-icon style="color:#fabe02;position:relative;right:5px;top:6px;">cancel</mat-icon>ΑΚΥΡΩΣΗ
+        </button>
+        <button class="btn" (click)="logOut()" style="background: #060639;color:#fabe02;font-size: 14px;line-height: 37px;padding: 0 25px;">
+          <mat-icon style="color:#fabe02;position: relative;right:5px;top:6px;">exit_to_app</mat-icon>ΕΞΟΔΟΣ <label
+            style="line-height:23px;padding-left:10px;">{{isAdmin()?'(Admin)':isACC()?'(Λογιστήριο)':isCC()?'(Κέντρο
+            Ελέγχου)':'(Εγκαταστάτης)'}}</label>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="" style="padding-left:30px;background-color: #F4F4F4">
+    <div class="col-md-12 fields" style="height:100vh;overflow-y:scroll;padding-bottom: 40px;">
+      <div class="row">
+        <div class="col-md-3" style="padding-top:30px;"><label style="font-size:20px;color:#060639;font-weight: bold;">ΕΓΚΑΤΑΣΤΑΤΗΣ</label>
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΕΠΩΝΥΜΟ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.lastName" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΝΟΜΑ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.name" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΝΟΜΑ ETΑΙΡΙΑΣ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.companyName" [readonly]="edit == false">
+          </div>
+
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΟΔΟΣ\ΑΡΙΘΜΟΣ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerInsuredAreaAddress" [readonly]="edit == false">
+          </div>
+
+          <div>
+            <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΟΛΗ
+            </div>
+            <div>
+              <input type="text" [(ngModel)]="data.installerInsuredAreaCity" [readonly]="edit == false">
+            </div>
+          </div>
+
+
+          <div>
+            <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΕΡΙΓΡΑΦΗ ΕΠΑΓΓΕΛΜΑΤΟΣ
+            </div>
+            <div>
+              <textarea type="text" [(ngModel)]="data.installerProffesionalDescription" [readonly]="edit == false"></textarea>
+            </div>
+          </div>
+
+
+
+
+
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">Α.Φ.Μ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerAfm" [readonly]="edit == false">
+          </div>
+
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΔΟΥ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.doy" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΤΗΛΕΦΩΝΟ ΧΩΡΟΥ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerLandlinePhone" [readonly]="edit == false">
+          </div>
+
+
+
+
+
+
+        </div>
+
+        <div class="col-md-3" style="padding-top:69px;">
+
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">FAX
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.fax" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΚΙΝΗΤΟ
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerMobilePhone" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΕΜΑΙL
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerMobilePhone" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">WEBSITE
+          </div>
+          <div>
+            <input type="text" [(ngModel)]="data.installerWebsite" [readonly]="edit == false">
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">ΠΟΛΙΤΙΚΗ ΕΙΣΠΡΑΞΗΣ
+          </div>
+          <div>
+            <input type="radio" name="radio1" value="selfCollection" [(ngModel)]="data.installerCollectionPolicy"
+                   style="margin-right:5px;" [disabled]="edit == false">
+            <label style="color:black;">Είσπραξη από τον ίδιο</label>
+          </div>
+
+          <div>
+            <input type="radio" name="radio1" value="hdmsCollection" [(ngModel)]="data.installerCollectionPolicy"
+                   style="margin-right:5px;" [disabled]="edit == false">
+            <label style="color:black;">Είσπραξη από τον ίδιο</label>
+          </div>
+
+          <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">EMAIL INVOICE
+          </div>
+          <div>
+            <input type="radio" name="radio2" value="yes" [(ngModel)]="data.emailInvoice" style="margin-right:5px;"
+                   [disabled]="edit == false">
+            <label style="color:black;">Ναι</label>
+          </div>
+
+          <div>
+            <input type="radio" name="radio2" value="no" [(ngModel)]="data.emailInvoice" style="margin-right:5px;"
+                   [disabled]="edit == false">
+            <label style="color:black;">Όχι</label>
+          </div>
+
+
+          <div>
+            <div style="color:#060639;font-size: 12px;font-weight: bold; margin-top:10px">BILLING ADDRESS ONLY
+            </div>
+            <div>
+              <input type="radio" name="radio3" value="yes" [(ngModel)]="data.billingAddressOnly" style="margin-right:5px;"
+                     [disabled]="edit == false">
+              <label style="color:black;">Ναι</label>
+            </div>
+            <div>
+              <input type="radio" name="radio3" value="no" [(ngModel)]="data.billingAddressOnly" style="margin-right:5px;"
+                     [disabled]="edit == false">
+              <label style="color:black">Όχι</label>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

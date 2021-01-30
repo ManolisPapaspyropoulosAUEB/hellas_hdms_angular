@@ -1,0 +1,15 @@
+input:focus {
+  outline: 0 !important;
+}
+
+.mat-icon{
+  font-family: 'Material Icons' !important;
+}
+
+.userid:hover{
+  text-decoration: underline !important;
+}
+
+a:hover{
+  text-decoration: underline !important;
+}
